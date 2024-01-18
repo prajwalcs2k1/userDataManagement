@@ -10,10 +10,7 @@ routerUser.post("/register",controllerUser.userRegister)
 // User Login 
 routerUser.post("/login",controllerUser.userLogin)
 
-// middleware
-routerUser.use(checkLogin)
-
 // User Profile 
-routerUser.get("/profile",controllerUser.userProfile)
+routerUser.get("/profile",checkLogin, controllerUser.userProfile)
 
 module.exports = routerUser
