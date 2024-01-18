@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "prajwal",
+    "password": "prajwal",
+    "database": "userdatamanagement",
+    "host": "127.0.0.1",
+    "logging" : false,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": ""
+  },
+  "production": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": ""
+  }
+}
