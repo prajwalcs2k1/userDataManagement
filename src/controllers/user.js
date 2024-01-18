@@ -71,7 +71,7 @@ exports.userLogin = async (req,res) => {
     try{
         const requiredUser = await fetchUserDataByName(userName)
         
-        if(requiredUser == null) return res.status(404).send(jsonResponse.failure(null,"user does not exist"))
+        if(requiredUser == null) return res.status(404).send(jsonResponse.failure(null,"user not registered"))
         
         // compare the password provided by the user with that stored in the table
         if(await bcrypt.compare(password,requiredUser.password)){
