@@ -45,7 +45,7 @@ exports.userRegister = async (req,res) => {
         await newUser.save()
 
         // creating a token
-        const userToken = jwt.sign({id : newUser.id, name : newUser.name}, process.env.SECRET_KEY)
+        const userToken = jwt.sign({id : newUser.id, name : newUser.name, exp: Math.floor(Date.now() / 1000) + (60 * 60)}, process.env.SECRET_KEY)
 
         return res.status(201).send(jsonResponse.success(userToken,"successfully registered"))
     }
@@ -78,7 +78,7 @@ exports.userLogin = async (req,res) => {
         // compare the password provided by the user with that stored in the table
         if(await bcrypt.compare(password,requiredUser.password)){
             // creating a token
-            const userToken = jwt.sign({id : requiredUser.id, name : requiredUser.name},process.env.SECRET_KEY)
+            const userToken = jwt.sign({id : requiredUser.id, name : requiredUser.name, exp: Math.floor(Date.now() / 1000) + (60 * 60)},process.env.SECRET_KEY)
             return res.status(200).send(jsonResponse.success(userToken,"logged in successfully"))
         }else{
             return res.status(400).send(jsonResponse.failure(null,"wrong password")) 
