@@ -12,4 +12,4 @@ exports.failure = (data = returnedData, message = returnedMessage)=>{
         message : message,
         status : false
     }
-}
+}   
