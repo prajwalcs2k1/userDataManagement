@@ -23,7 +23,7 @@ exports.userRegister = async (req,res) => {
         password : password
     }
     const rules =  {
-        userName : ["required", "regex:/^[a-zA-Z0-9]+$/"],
+        userName : ["required", "regex:/^[a-zA-Z0-9 ]+$/"],
         password : "required"
     }
     
@@ -95,13 +95,18 @@ exports.userLogin = async (req,res) => {
 exports.userProfile = async (req,res) => {
     try{
         // fetch the loggedin user details 
-        const requiredUser = await model.User.findOne({
+        let requiredUser = await model.User.findOne({
             where : {
                 id : req.loggedInUser.id
             }
         })
     
         if(requiredUser == null) return res.status(400).send(jsonResponse.failure(null,"user not found"))
+
+        requiredUser = {
+            id : requiredUser.id,
+            name : requiredUser.name
+        }
     
         return res.status(200).send(jsonResponse.success(requiredUser,"success"))
     }
