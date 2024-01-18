@@ -45,7 +45,7 @@ exports.userRegister = async (req,res) => {
         await newUser.save()
         const userToken = jwt.sign({id : newUser.id, name : newUser.name}, process.env.SECRET_KEY)
 
-        return res.status(201).send(jsonResponse.success(userToken,"successfully signed up"))
+        return res.status(201).send(jsonResponse.success(userToken,"successfully registered"))
     }
     catch(err){
         console.log(err)
@@ -84,5 +84,25 @@ exports.userLogin = async (req,res) => {
     catch(err){
         console.log(err)
         return res.status(503).send(jsonResponse.failure(err,"database connection error... try again later"))
+    }    
+}
+
+
+// User Profile
+exports.userProfile = async (req,res) => {
+    try{
+        // fetch the loggedin user details 
+        const requiredUser = await model.User.findOne({
+            where : {
+                id : req.loggedInUser.id
+            }
+        })
+    
+        if(requiredUser == null) return res.status(400).send(jsonResponse.failure(null,"user not found"))
+    
+        return res.status(200).send(jsonResponse.success(requiredUser,"success"))
+    }
+    catch(err){
+        return res.status(503).send(jsonResponse.failure(null,"database connection error... try again later"))
     }    
 }
