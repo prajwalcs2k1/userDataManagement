@@ -43,6 +43,8 @@ exports.userRegister = async (req,res) => {
             password : hashedPassword
         })
         await newUser.save()
+
+        // creating a token
         const userToken = jwt.sign({id : newUser.id, name : newUser.name}, process.env.SECRET_KEY)
 
         return res.status(201).send(jsonResponse.success(userToken,"successfully registered"))
@@ -75,6 +77,7 @@ exports.userLogin = async (req,res) => {
         
         // compare the password provided by the user with that stored in the table
         if(await bcrypt.compare(password,requiredUser.password)){
+            // creating a token
             const userToken = jwt.sign({id : requiredUser.id, name : requiredUser.name},process.env.SECRET_KEY)
             return res.status(200).send(jsonResponse.success(userToken,"logged in successfully"))
         }else{

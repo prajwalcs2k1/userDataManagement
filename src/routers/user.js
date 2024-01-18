@@ -4,7 +4,7 @@ const routerUser =  express.Router()
 const {checkLogin} = require("../middleware/middlewareLogin")
 
 
-// User SignUp 
+// User Registration 
 routerUser.post("/register",controllerUser.userRegister)
 
 // User Login 
